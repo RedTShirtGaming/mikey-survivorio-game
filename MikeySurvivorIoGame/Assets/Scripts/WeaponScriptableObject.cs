@@ -10,6 +10,8 @@ public class WeaponScriptableObject : ScriptableObject
     [Space(10), Header("Stats")]
 
     public new string name;
+    [SerializeField] string _weaponId;
+    public string weaponId { get { return _weaponId; } set { _weaponId = value; } }
     [TextArea] public string description;
     [Tooltip("Type of attack. AttackType.Other shouldn't be used if possible.")] public AttackType attackType;
     public RangedAttackType rangedAttackType;
@@ -20,6 +22,21 @@ public class WeaponScriptableObject : ScriptableObject
     [Space(10), Header("Misc")]
 
     public Image weaponImage;
+
+    bool isInitialised;
+    bool Initialise()
+    {
+        
+
+        // returns true so that isInitialised becomes true after this function runs
+        return true;
+    }
+
+    private void OnValidate()
+    {
+        if (!isInitialised) isInitialised = Initialise();
+        weaponId = name.ToLower().Replace(" ", "-");
+    }
 
     public bool GenerateRandomCritical()
     {
